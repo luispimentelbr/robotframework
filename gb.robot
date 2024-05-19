@@ -8,52 +8,63 @@ Library     DateTime
 
 ** Variables **
 #Dados do teste
-${CEP_teste}    52011260
+${NomeDaPesquisa}      Jogo Battletoads - Mega Drive
+${email}    luis@gmail.com
+
 
 #Variáveis de configuração
-${URL}      https://www.boticario.com.br/
+${URL}      https://www.meugameusado.com.br/
 ${Browser}  chrome
 
 #Elementos
-${Button_Aceitar_Cookies}   //button[@id='onetrust-accept-btn-handler']
-${Button_CEP1}  (//a[contains(.,'Informar CEP')])[1]
-${Button_CEP2}  (//div[contains(.,'Digitar um CEP')])[25]
-${Input_CEP}    (//input[@type='text'])[3]
-${Button_CEP3}  (//button[@type='submit'][contains(.,'OK')])[3]
-${Button_Lancamento}  //img[contains(@alt,'Lançamentos')]
-${Button_Produto}  (//a[@href='https://www.boticario.com.br/zaad-venture-eau-de-parfum-95ml/'])[2]
-${Button_Comprar}   //a[@data-cy='buy-button'][contains(.,'Comprar')]
+${Input_Pesquisa}   (//input[contains(@type,'text')])[2]
+${Button_Pesquisa}  (//button[@aria-label='Buscar'])[2]
+${Button_jogo}            //a[contains(@title,'Jogo Battletoads - Mega Drive')]
+${Button_Compra}     (//a[contains(.,'Comprar')])[1]
+${Button_Finalizar}  //a[contains(@class,'botao principal ir-carrinho hidden-phone')]
+${Input_Email}   //input[@type='text'][contains(@id,'login')]
+${Button_Finalizar2}     //a[contains(@class,'submit-email botao principal grande')]
 
 ** Keywords **
 
-Dado que eu acesso o site boticario
-        ${now} =    Get Current Date    result_format=%Y-%m-%d_%H-%M-%S
+Dado que eu acesso o site do games
+    ${now} =    Get Current Date    result_format=%Y-%m-%d_%H-%M-%S
     # Nome do arquivo com base na data e hora
     ${nome_arquivo} =    Set Variable    screenshot_${now}.webm
 
     Open Browser    ${URL}  ${Browser}
- #   Maximize Browser Window
- #   Start Video Recording      name=${nome_arquivo}
-       Sleep   2s
+    Maximize Browser Window
+    Start Video Recording      name=${nome_arquivo}
+       Sleep   5s
 
-Quando clico no botão CEP
-        Click Element   ${Button_Aceitar_Cookies}
-        Click Element   ${Button_CEP1} 
-        Click Element   ${Button_CEP2} 
-        Input Text  ${Input_CEP}   ${CEP_teste}  
-        Click Element   ${Button_CEP3}
-
-E clico no botao lancamentos
-        Click Element   ${Button_Lancamento}
-        Click Element   ${Button_Produto}
-
-Então o comprar é executado
-        Click Element   ${Button_Comprar}
-        Close Browser
+Quando digito o nome da pesquisa
+    Input Text  ${Input_Pesquisa}   ${NomeDaPesquisa}
+       Sleep   5s
+     Stop Video Recording 
+      
+E clico no botao pesquisar
+    Click Element   ${Button_Pesquisa}
+       Sleep   5s
+E clico em comprar
+    Wait Until Element Is Visible   ${Button_jogo}  8
+    Click Element   ${Button_jogo}
+       Sleep   5s
+Então o compra é executado
+#    Wait Until Element Is Visible   ${Button_Prova}  8
+   Click Element   ${Button_Compra}
+    Sleep   5s
+   Click Element   ${Button_Finalizar}
+    Sleep   5s
+     Input Text  ${Input_Email}   ${email}   
+    Sleep   5s
+    Click Element   ${Button_Finalizar2}
+     Sleep   5s   
+    Close Browser
 
 ** Test Cases **
-Cenário 1: Executar compra no site boticario
-    Dado que eu acesso o site boticario
-    Quando clico no botão CEP
-    E clico no botao Lancamentos
-    Então o comprar é executado
+Cenário 1: Executar compra no site do games
+    Dado que eu acesso o site do games
+    Quando digito o nome da pesquisa
+    E clico no botao pesquisar
+    E clico em comprar
+    Então o compra é executado
