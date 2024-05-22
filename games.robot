@@ -44,7 +44,7 @@ Quando digito o nome da pesquisa
       
 E clico no botao pesquisar
     Click Element   ${Button_Pesquisa}
-       Sleep   5s
+       Sleep   4s
 E clico em comprar
     Wait Until Element Is Visible   ${Button_jogo}  8
     Click Element   ${Button_jogo}
