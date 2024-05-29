@@ -6,7 +6,6 @@ Library     FakerLibrary    locale=pt_BR
 
 *** Variables ***
 # Dados do teste
-#${Nascimento}    10/10/1980
 ${CPF}          479.915.840-62
 ${EMAIL}        luis@exemplo.com
 ${NOME}         Carlos Silva
