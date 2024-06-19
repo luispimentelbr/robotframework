@@ -27,7 +27,6 @@ clicar em submit
 fechar navegador
     Close Browser
 
-
 ** Test Cases **
 Cenário 1: Preencher formulario
     abrir navegador e acessar o Site
